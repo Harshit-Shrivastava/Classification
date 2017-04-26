@@ -25,3 +25,5 @@ pred <- predict(model, data = as.data.frame(testset))
 #calculating accuracy
 accuracy = 1 - mean(pred == testset[ , testset[,11]]) 
 print(paste("Accuracy of decision tree on this test set is ", accuracy))
+
+table(pred)
