@@ -17,13 +17,11 @@ rpart.plot(model, box.palette="GnBu", branch.lty=3, shadow.col="gray", nn=TRUE, 
 
 #printing and plotting relative error vs cp and size of tree for pruning
 printcp(model)
-plotcp(mode)
+plotcp(model)
 
 #testing the model
 pred <- predict(model, data = as.data.frame(testset))
 
 #calculating accuracy
-accuracy = 1 - mean(pred == testset[ , testset[,11]]) 
+accuracy = 1 - mean(pred == testset[,11]) 
 print(paste("Accuracy of decision tree on this test set is ", accuracy))
-
-table(pred)
