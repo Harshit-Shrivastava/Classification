@@ -71,7 +71,8 @@ processData <- function(X, case) {
   return(list(train=train, test=test))
 }
 
-data_processed = processData(data, 3) #give the case number as per the required data pre-processing methods
+case = 1 #give the case number as per the required data pre-processing methods {1,2,3}
+data_processed = processData(data, case) 
 train.data = data_processed$train
 test.data = data_processed$test
 
@@ -143,3 +144,10 @@ confusion_matrix_train = conf_mat(yhat.train, train.data[,10])
 confusion_matrix_test = conf_mat(yhat.test, test.data[,10])
 confusion_matrix_train
 confusion_matrix_test
+if(case == 1) {
+  print('Applied random sampling on data')
+} else if(case == 2) {
+  print('Applied stratified sampling on data')
+} else if(case == 3) {
+  print('Applied oversampling and stratified sampling on the new data')
+}
