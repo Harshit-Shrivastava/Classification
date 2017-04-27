@@ -15,6 +15,7 @@ model <- rpart(trainset$V11 ~ ., data = as.data.frame(trainset), method="class",
 #plotting the tree, along with attributes and split factors
 rpart.plot(model, box.palette="GnBu", branch.lty=3, shadow.col="gray", nn=TRUE, fallen.leaves = TRUE)
 
+
 #printing and plotting relative error vs cp and size of tree for pruning
 printcp(model)
 plotcp(model)
