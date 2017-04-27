@@ -1,7 +1,7 @@
 data = read.table("../Data/page-blocks.data", sep = "")
 data = as.matrix(data)
-bound <- floor(nrow(data)*0.7)
-#data <- data[sample(nrow(data)), ]   
+bound <- floor(nrow(data)*0.5)
+data <- data[sample(nrow(data)), ]   
 train.data = data[1:bound,]
 test.data = data[(bound+1):nrow(data),]
 table(train.data[,11])
@@ -40,21 +40,39 @@ classification_error_naive_bayes <- function(A) {
 }
 
 class_model = classification_error_naive_bayes(train.data)
+yhat.train = class_model$yhat
 train.error = class_model$error_rate
 
 class_model_test = classification_error_naive_bayes(test.data)
+yhat.test = class_model$yhat
 test.error = class_model_test$error_rate
 
 train.error
 test.error
 
-#==============================================
-library(e1071)
-model <- naiveBayes(train.data[,11] ~ ., data = train.data)
-class(model)
-summary(model)
-print(model)
 
-preds <- predict(model, newdata = as.data.frame(train.data))
-conf_matrix <- table(preds, as.data.frame(train.data[,11]))
-conf_matrix
+conf_mat <- function(y_pred, y_act) {
+  A = matrix(0, nrow = 5, ncol = 5)
+  for(i in 1:length(y_pred)) {
+    r = y_act[i]
+    c = y_pred[i]
+    A[r, c] = A[r, c] + 1
+  }
+  return(A)
+}
+
+confusion_matrix_train = conf_mat(yhat.train, train.data[,11])
+confusion_matrix_train
+
+confusion_matrix_test = conf_mat(yhat.test, test.data[,11])
+confusion_matrix_test
+#==============================================
+#library(e1071)
+#model <- naiveBayes(train.data[,11] ~ ., data = train.data)
+#class(model)
+#summary(model)
+#print(model)
+
+#preds <- predict(model, newdata = as.data.frame(train.data))
+#conf_matrix <- table(preds, as.data.frame(train.data[,11]))
+#conf_matrix
